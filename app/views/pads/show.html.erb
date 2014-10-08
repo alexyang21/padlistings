@@ -1,0 +1,12 @@
+<p id="notice"><%= notice %></p>
+
+<h1><%= @pad.heading %></h1>
+
+<p><%= @pad.body %></p>
+
+<p><%= number_to_currency(@pad.price, precision: 0) %></p>
+
+<p><%= link_to "View on Craigslist", @pad.external_url %></p>
+
+<%= link_to 'Edit', edit_pad_path(@pad) %> |
+<%= link_to 'Back', pads_path %>
