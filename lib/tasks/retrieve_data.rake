@@ -9,7 +9,7 @@ task scrape: :environment do
   # search_url = "http://search.3taps.com"
   poll_url = "http://polling.3taps.com/poll"
   
-  # loop do
+  loop do
     # Construct query
     params = { 
       auth_token: auth_token,
@@ -31,29 +31,29 @@ task scrape: :environment do
     puts "Database anchor is #{Key.find_by(key: "anchor").value}"
     puts "New anchor is #{result["anchor"]}"
     
-    first_listing = result["postings"].last
-    puts first_listing["images"]
+    # first_listing = result["postings"].last
+    # puts first_listing["images"]
     # first_listing["images"].each do |image|
     #   puts image["full"]
     # end
     
-    # # Add listings to database
-    # result["postings"].each do |listing|
-    #   Pad.create(
-    #     heading: listing["heading"],
-    #     body: listing["body"],
-    #     price: listing["price"],
-    #     timestamp: Time.at(listing["timestamp"]),
-    #     external_url: listing["external_url"]
-    #   )
-    # end
+    # Add listings to database
+    result["postings"].each do |listing|
+      Pad.create(
+        heading: listing["heading"],
+        body: listing["body"],
+        price: listing["price"],
+        timestamp: Time.at(listing["timestamp"]),
+        external_url: listing["external_url"]
+      )
+    end
     
-    # # Reset anchor in database
-    # Key.find_by(key: "anchor").update(value: result["anchor"])
-    # puts "New database anchor is #{Key.find_by(key: "anchor").value}"
+    # Reset anchor in database
+    Key.find_by(key: "anchor").update(value: result["anchor"])
+    puts "New database anchor is #{Key.find_by(key: "anchor").value}"
     
-    # break if result["postings"].empty?
-  # end 
+    break if result["postings"].empty?
+  end 
   
 
   # result["postings"].each do |listing|
