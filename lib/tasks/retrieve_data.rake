@@ -39,13 +39,17 @@ task scrape: :environment do
     
     # Add listings to database
     result["postings"].each do |listing|
-      Pad.create(
-        heading: listing["heading"],
-        body: listing["body"],
-        price: listing["price"],
-        timestamp: Time.at(listing["timestamp"]),
-        external_url: listing["external_url"]
-      )
+      begin
+        Pad.create(
+          heading: listing["heading"],
+          body: listing["body"],
+          price: listing["price"],
+          timestamp: Time.at(listing["timestamp"]),
+          external_url: listing["external_url"]
+        )
+      rescue => e
+        puts "#{e}"        
+      end
     end
     
     # Reset anchor in database

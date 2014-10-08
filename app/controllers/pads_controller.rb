@@ -4,7 +4,7 @@ class PadsController < ApplicationController
   # GET /pads
   # GET /pads.json
   def index
-    @pads = Pad.all.paginate(:page => params[:page], :per_page => 30)
+    @pads = Pad.order("timestamp DESC").paginate(:page => params[:page], :per_page => 30)
   end
 
   # GET /pads/1
